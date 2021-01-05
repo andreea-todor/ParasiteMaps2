@@ -1,0 +1,169 @@
+{% load static %}
+<!--<!DOCTYPE html>-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Parasites around the world</title>
+    <!--<link rel="stylesheet" href="{% static 'style.css' %} ">-->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
+
+    <style>
+       body {margin:0;}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #111;
+}
+
+.active {
+  background-color: #4CAF50;
+}
+
+/* submenu positioning*/
+.nav ul {
+  position: absolute;
+  white-space: nowrap;
+  border-bottom: 5px solid  orange;
+  z-index: 1;
+  left: -99999em;
+}
+.nav > li:hover > ul {
+  left: auto;
+  margin-top: 5px;
+  min-width: 100%;
+}
+.nav > li li:hover > ul {
+  left: 100%;
+  margin-left: 1px;
+  top: -1px;
+}
+
+#map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: 10px;
+}
+
+#text {
+  float: right;
+  margin-right: 70px;
+  width: 550px;
+  height: 340px;
+  text-align: center;
+  border: 2px solid green;
+  padding: 10px;
+}
+</style>
+
+</head>
+<body style="background-color: #4CAF50;">
+<br><br>
+<h2 style="position: absolute;left: 50%;transform: translateX(-50%);text-align: center;font-family: Arial, Helvetica, sans-serif">Parasites around the world</h2>
+
+<!--<a href="{% url 'plasmodium-page' %}" methods="POST" >Plasmodium </a>&nbsp
+<a href="{% url 'leishmania-page' %}" methods="POST" >Leishmania </a>&nbsp
+<a href="{% url 'trypanosoma-page' %}" methods="POST" >Trypanosoma </a>&nbsp
+<a href="{% url 'ascaris-lumbricoides-page' %}" methods="POST" >Ascaris Lumbricoides </a>&nbsp
+<a href="{% url 'trichinella-spiralis-page' %}" methods="POST" >Trichinella Spiralis </a>&nbsp-->
+<br><br><br>
+
+<div id="menu">
+    <nav>
+<ul class="nav">
+    <li><a class="active" href="{% url 'default-page' %}" methods="POST">Home</a></li>
+    <li><a href="#africa" >Africa</a>
+        <ul>
+            <li><a href="{% url 'plasmodium-page' %}" methods="POST" >Plasmodium </a></li>
+            <li><a href="{% url 'leishmania-page' %}" methods="POST" >Leishmania </a></li>
+            <li><a href="{% url 'trypanosoma-page' %}" methods="POST" >Trypanosoma </a></li>
+            <li><a href="{% url 'ascaris-lumbricoides-page' %}" methods="POST" >Ascaris Lumbricoides </a></li>
+        </ul>
+    </li>
+    <li><a href="#asia" >Asia</a>
+        <ul>
+            <li><a href="{% url 'plasmodium-page' %}" methods="POST" >Plasmodium </a></li>
+            <li><a href="{% url 'ascaris-lumbricoides-page' %}" methods="POST" >Ascaris Lumbricoides </a></li>
+            <li><a href="{% url 'trichinella-spiralis-page' %}" methods="POST" >Trichinella Spiralis </a></li>
+        </ul>
+    </li>
+    <li><a href="#australia" >Australia</a></li>
+    <li><a href="#europe" >Europe</a>
+        <ul>
+            <li><a href="{% url 'leishmania-page' %}" methods="POST" >Leishmania </a></li>
+            <li><a href="{% url 'ascaris-lumbricoides-page' %}" methods="POST" >Ascaris Lumbricoides </a></li>
+            <li><a href="{% url 'trichinella-spiralis-page' %}" methods="POST" >Trichinella Spiralis </a></li>
+        </ul>
+    </li>
+    <li><a href="#namerica" >North America</a></li>
+    <li><a href="#samerica" >South America</a>
+        <ul>
+            <li><a href="{% url 'plasmodium-page' %}" methods="POST" >Plasmodium </a></li>
+            <li><a href="{% url 'leishmania-page' %}" methods="POST" >Leishmania </a></li>
+        </ul>
+    </li>
+   <li style="float: right;"><a href="#contact">Contact</a>
+        <ul style="right: 2px;">
+            <li><a>E-mail: duoandreea@poli.com</a></li>
+        </ul>
+    </li>
+    <li style="float: right;"><a href="#about">About</a>
+        <ul style="right: 2px;">
+        <li><a>We like useful, well-made and aesthetic things. We are DuoAndreea!</a></li>
+        </ul>
+    </li>
+</ul>
+    </nav>
+</div>
+
+<div id='map' width="630" height="400" style="width:630px; height:400px; float: left; margin-left: 20px; top: 100px; border: 3px solid green; padding: 10px;">
+    <br><br><br>
+    <script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiYW5kcmVlYWFuZHJlZXNjdSIsImEiOiJja2dxbHpkOHgwNWlmMnJtZnZhOTkxbmVjIn0.tj__Y5aYxguOzCoGh-UR3A';
+var map = new mapboxgl.Map({
+container: 'map',
+style: 'mapbox://styles/mapbox/streets-v11'
+
+});
+</script>
+</div>
+
+<br><br>
+<div id="text" style="background-color: #006600; color: 66ff66; font-family: Arial, Helvetica, sans-serif;">
+    <h2>Hi, adventurer, where do you want to travel today?</h2>
+    <h3>Traveling is a very pleasant thing, but when we take care of our health and the health of others.<br>
+        Thus, you can find out about countries at high risk of disease with certain parasites and most importantly, how you can prevent the disease.
+        <br>Just select the desired destination and find out how you can keep your health. <br>
+        Have a nice holiday and stay healthy!
+    </h3>
+</div>
+
+<div style="position: absolute; left: 50%;transform: translateX(-50%); bottom: 5px; color: #d3d3d3; text-align: center; font-family: Arial, Helvetica, sans-serif;">
+    <h4>You may contact us here: duoandreea@poli.com. Copyright (C) DuoAndreea 2021</h4>
+</div>
+
+</body>
+</html>
